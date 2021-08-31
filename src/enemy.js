@@ -1,16 +1,18 @@
 
 class Enemy {
+  static RADIUS = 15;
+  static COLOR = 'black';
   constructor () {
-    this.position = V2(0, 0);
-    this.direction = V2(0, 0);
-    this.velocity = V2(0, 0);
+    this.position = V2();
+    this.direction = V2();
+    this.velocity = V2();
   }
   draw(ctx) {
     ctx.save();
       ctx.translate(this.position.x, this.position.y);
       ctx.beginPath();
-      ctx.arc(0, 0, 15, 0, 2 * Math.PI);
-      ctx.fillStyle = 'black';
+      ctx.arc(0, 0, Enemy.RADIUS, 0, 2 * Math.PI);
+      ctx.fillStyle = Enemy.COLOR;
       ctx.fill();
     ctx.restore();
   }
