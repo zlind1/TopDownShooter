@@ -10,7 +10,7 @@ class Bullet {
     this.angle = angle;
     this.velocity = V2().lookAt(angle).scale_i(Bullet.SPEED);
   }
-  draw(ctx) {
+  draw = (ctx) => {
     ctx.save();
       ctx.translate(this.position.x, this.position.y);
       ctx.rotate(this.angle);
@@ -18,7 +18,7 @@ class Bullet {
       ctx.fillRect(0, -Bullet.WIDTH/2, Bullet.LENGTH, Bullet.WIDTH);
     ctx.restore();
   }
-  update(game) {
+  update = (game) => {
     this.position.add_i(this.velocity);
     const offRight = this.position.x > game.width;
     const offLeft = this.position.x < 0;
