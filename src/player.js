@@ -6,7 +6,7 @@ class Player {
   static BARREL_LENGTH = 30;
   static SPEED = 5;
   static COLOR = 'blue';
-  static FIRE_RATE = 10;
+  static FIRE_RATE = 20;
   constructor(x, y) {
     this.position = V2(x, y);
     this.lookPosition = V2(0, 0);
@@ -51,6 +51,11 @@ class Player {
       const bullet = new Bullet(barrelPosition, this.angle);
       game.bullets.push(bullet);
       this.lastShotTime = game.timer;
+    }
+    for (const enemy of game.enemies) {
+      if (enemy.position.sub(this.position).length() < Enemy.RADIUS + Player.RADIUS) {
+        game.gameOver();
+      }
     }
   }
 }

@@ -23,6 +23,7 @@ class Enemy {
       if (bullet.position.sub(this.position).length() < Enemy.RADIUS) {
         game.enemies = game.enemies.filter(item => item !== this);
         game.bullets = game.bullets.filter(item => item !== bullet);
+        game.score++;
         break;
       }
     }

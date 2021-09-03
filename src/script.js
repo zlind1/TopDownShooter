@@ -1,4 +1,5 @@
+let ui, game;
 
 function main() {
-  new Game();
+  game = new Game();
 }

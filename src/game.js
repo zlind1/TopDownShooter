@@ -2,21 +2,30 @@
 class Game {
   static COLOR = 'yellow';
   constructor() {
+    this.initVariables();
+    this.initListeners();
+    this.resizeCanvas();
+    this.ui.startMenu(this);
+  }
+  initVariables = () => {
     this.canvas = document.querySelector('canvas');
     this.ctx = this.canvas.getContext('2d');
+    this.ui = new UI();
     this.keys = {LEFT: false, RIGHT: false, UP: false, DOWN: false};
     this.bullets = [];
     this.enemies = [];
     this.player = new Player(window.innerWidth/2, window.innerHeight/2);
-    this.width = 0;
-    this.height = 0;
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
     this.timer = 0;
+    this.running = false;
+    this.score = 0;
+  }
+  initListeners = () => {
     window.onresize = this.resizeCanvas;
     window.onmousedown = window.onmouseup = this.handleMouseClick;
     window.onmousemove = window.onmousedrag = this.handleMouseMove;
     window.onkeydown = window.onkeyup = this.handleKeys;
-    this.resizeCanvas();
-    window.requestAnimationFrame(this.update);
   }
   resizeCanvas = () => {
     this.width = this.canvas.width = window.innerWidth;
@@ -51,6 +60,7 @@ class Game {
       enemy.draw(this.ctx);
     }
     this.player.draw(this.ctx);
+    this.ui.updateScore(this);
   }
   update = () => {
     this.player.update(this);
@@ -62,10 +72,21 @@ class Game {
     }
     this.draw();
     this.timer++;
-    if (this.timer % 100 == 0) {
+    if (this.timer % 50 == 0) {
       this.spawnEnemy();
     }
+    if (this.running) {
+      window.requestAnimationFrame(this.update);
+    }
+  }
+  start = () => {
+    this.initVariables();
+    this.running = true;
     window.requestAnimationFrame(this.update);
+  }
+  gameOver = () => {
+    this.running = false;
+    this.ui.gameOver(this);
   }
   handleMouseClick = (e) => {
     const mouseDown = (e.type === 'mousedown');
